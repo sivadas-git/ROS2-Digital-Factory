@@ -86,6 +86,37 @@ counter_listener_node.py
 Robot_Yap_ROS.py
 CounterReceiver.cs
 
+UC5 – Industrial Validation System
+
+LiDAR:
+P+F LiDAR → ROS2 → VR
+Files:
+pf_detector.py
+lidar_tcp_bridge.py
+lidar_rtt_logger.py
+LidarReceiver.cs
+Lidar_Indi.cs
+LidarLogger.cs
+
+Robot:
+UR10 → TCP/IP → VR
+Files:
+Industrial_robot_conv.py
+Industrial.cs
+JointAngleReceiver.cs
+UR10Receiver.cs
+RobotJointController.cs
+UR10Manipulator.cs
+UR10ManipulatorS.cs
+RobotLogger.cs
+
+PLC:
+PLC / Sensor Data → TCP/IP → VR
+Files:
+PLCReceiver.cs
+SensorStatus3DROS.cs
+PLCLogger.cs
+
 Data Logging
 - RTT logged only at initiating node
 - Buffered logging to avoid bias
