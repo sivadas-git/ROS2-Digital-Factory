@@ -1,136 +1,35 @@
-Overview
-This document describes the experimental implementation used in the study:
-“A ROS2-based Digital Factory Architecture for Real-Time and Interoperable Virtual Reality Simulation”
+# ROS2 Digital Factory Experimental Repository
 
-The experiments evaluate end-to-end round-trip time (RTT) and timing stability (jitter) across multiple manufacturing subsystems using:
-- TCP/IP socket-based communication (baseline)
-- ROS2 middleware (DDS-based) communication (proposed architecture)
+## Overview
 
-All experiments are conducted under identical hardware and network conditions.
+This repository contains the source code supporting the experimental work reported in:
 
-RTT Measurement Principle
-RTT is always measured only at the initiating device:
-RTT = T_received − T_sent
-This avoids clock synchronization issues and PTP dependency.
+**Experimental characterization of communication performance in heterogeneous Digital Factory environments**
 
-Experimental Use Cases
-UC1 – Safety System (Streaming)
-UC2 – Inspection System (RPC)
-UC3 – Robot Arm System (Streaming)
-UC4b – Complex Integrated System
+The repository contains two main groups of experimental implementations:
 
-Each use case has:
-- TCP/IP baseline
-- ROS2 implementation
+1. **Controlled communication experiments** used to characterise TCP/IP, ROS2 DDS, and ROS2–Unity communication under increasing workloads.
+2. **Integrated Digital Factory use cases** involving safety, inspection, robotic, and industrial systems.
 
-UC1 – Safety System
-TCP/IP:
-Safety Pi → Central PC → VR → Central PC → Safety Pi
-Files:
-Safety_Pi.py
-Safety_Yap.py
-Safety_VR_RTT.cs
+The experiments evaluate communication behaviour using round-trip time (RTT), upper-tail latency, application-level packet loss, and computational resource utilisation across heterogeneous PC, Raspberry Pi, and industrial-device configurations.
 
-ROS2:
-Safety Pi → Central PC (ROS Bridge) → VR → Central PC → Safety Pi
-Files:
-Safety_Pi_ROS.py
-Safety_Yap_ROS_bridge.py
-Safety_VR_RTT.cs
+## Repository Structure
 
-UC2 – Inspection System
-TCP/IP:
-Central PC → Inspection Pi → Central PC → VR → Central PC
-Files:
-InspectionNonRosYapComplete.py
-IncomingTCPImage_1.cs
-
-ROS2:
-Central PC → Inspection Pi (ROS Service) → Central PC → VR → Central PC
-Files:
-image_client_node.py
-Image_ROS_Service.py
-IncomingTCPImage_1.cs
-
-UC3 – Robot Arm System
-TCP/IP:
-Robot PC → Central PC → VR → Central PC → Robot PC
-Files:
-robot_tcpip.py
-robot_yap.py
-ServerRobot.cs
-
-ROS2:
-Robot PC → Central PC (ROS Bridge) → VR → Central PC → Robot PC
-Files:
-robot_controller_node.py
-robot_to_central.py
-Robot_Yap_ROS.py
-ServerRobot.cs
-
-UC4b – Complex Integrated System
-TCP/IP:
-Central PC → Inspection → Robot → Safety → VR → Central PC
-Files:
-uc4b_tcpip_central_orchestrator.py
-robot_contour_tcp_server.py
-Safety_Complex.py
-CounterReceiver.cs
-
-ROS2:
-Central PC → Inspection → Robot → Safety → Central PC → VR
-Files:
-image_processing_node.py
-safety_counter_node.py
-counter_listener_node.py
-Robot_Yap_ROS.py
-CounterReceiver.cs
-
-UC5 – Industrial Validation System
-
-LiDAR:
-P+F LiDAR → ROS2 → VR
-Files:
-pf_detector.py
-lidar_tcp_bridge.py
-lidar_rtt_logger.py
-LidarReceiver.cs
-Lidar_Indi.cs
-LidarLogger.cs
-
-Robot:
-UR10 → TCP/IP → VR
-Files:
-Industrial_robot_conv.py
-Industrial.cs
-JointAngleReceiver.cs
-UR10Receiver.cs
-RobotJointController.cs
-UR10Manipulator.cs
-UR10ManipulatorS.cs
-RobotLogger.cs
-
-PLC:
-PLC / Sensor Data → TCP/IP → VR
-Files:
-PLCReceiver.cs
-SensorStatus3DROS.cs
-PLCLogger.cs
-
-Data Logging
-- RTT logged only at initiating node
-- Buffered logging to avoid bias
-- Streaming UCs: 10–60 Hz
-- Trigger-based UCs: on-demand
-
-Repository Scope
-This repository does not include:
-- OS images
-- ROS2 installation
-- Python/ROS dependencies
-
-
-This repository was prepared with the assistance of AI-based tools for
-code formatting, commenting, and documentation drafting. All system
-design decisions, implementations, experiments, and analyses were
-performed by the author.
+ROS2-Digital-Factory/
+├── 1.0_Safety/
+├── 2.0_Inspection/
+├── 3.0_Robot/
+├── 4.0_Complex/
+├── 5.0_Industrial/
+├── 6.0_Controlled_Communication/
+│   ├── ROS2_DDS/
+│   │   ├── PC_PC/
+│   │   ├── Pi_Pi/
+│   │   └── Pi_PC/
+│   ├── TCP_IP/
+│   │   ├── PC_PC/
+│   │   └── Pi_Pi/
+│   └── ROS2_Unity/
+│       ├── PC_PC/
+│       └── Pi_PC/
+└── README.md
